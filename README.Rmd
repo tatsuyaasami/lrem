@@ -11,4 +11,27 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
-This package simulates a linear rational expectation model.
+This package provides the tool to simulate the linear rational expected model. 
+
+$$
+E x_{t+1} = A x_{t} + B u_{t}, \ \ x_{t} \in \mathbb{R}^{n}, \ \ u_{t} \in \mathbb{R}^{m}    .
+$$
+You can also solve the above linear dynamic system as the one of process for simulation.
+
+## Install manual
+
+  - Open lrem.Rproj.
+  - Load the package devtools.
+  
+```{r}
+library("devtools")
+```
+
+  - Install this lrem package as follow
+
+```{r}
+devtools::install()
+```
+  
+Then, the package is installed in your computer.
+

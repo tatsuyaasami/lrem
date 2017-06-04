@@ -8,6 +8,5 @@
 
 proper_order_sch <- function(A) {
   Asch <- Matrix::Schur(A) 
-  Asch <- QZ::qz.dtrsen(Asch$T, Asch$Q, abs(Asch$EValues) <= 1)
-  return(Asch)
+  QZ::qz.dtrsen(Asch$T, Asch$Q, abs(Asch$EValues) <= 1)
 }

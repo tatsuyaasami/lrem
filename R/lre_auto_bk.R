@@ -1,6 +1,6 @@
-#' Solve a linear autonomous system with Blanchard and Kahn method
+#' Solve a linear autonomous system 
 #'
-#' @param A dim(A[1]) = dim(A)[2], n_by_n matrix
+#' @param A dim(A[1]) = dim(A)[2], n_by_n matrix, n_by_n matrix
 #' @param x0 x0 in R, Initial value of predetermined vector
 #'
 #' @return Functions of predetermined vector at t on un-predetermined vector at t and predetermined vector at t+1
@@ -8,22 +8,26 @@
 #' @export
 #'
 lre_auto_bk <- function (A, x0) {
-  n <- dim(A)[2]      # Matrix A is n %*% n.
+  n <- dim(A)[2]      # Matrix A is n times n.
  n1 <- length(x0)     # The number of predetermined variables
  n2 <- n - length(x0) # The number of un-predetermined variables
 pre <- 1:n1
 npr <- (n1 + 1):(n1 + n2)
 
 # The number of stable eigenvalues
- ns <- length(proper_order_sch(A)$EValues[abs(proper_order_sch(A)$EValues) <= 1])
+ ns <- length(proper_order_sch(A)$W[abs(proper_order_sch(A)$W) <= 1])
 # The number of unstable eigenvalues
  nu <- n - ns
 
 stb <- 1 : ns
 ust <- (ns + 1) : (ns + nu)
- 
-Q1s <- proper_order_sch(A)$Q[pre, stb]
-Q2s <- proper_order_sch(A)$Q[npr, stb]
+
+if (sum(npr) > n){ 
+  Q1s <- proper_order_sch(A)$Q[pre, stb]
+}else{
+  Q1s <- proper_order_sch(A)$Q[pre, stb]
+  Q2s <- proper_order_sch(A)$Q[npr, stb]
+}
 
 if (n1 > ns){
   cat("multiple solutions (n1 > ns)")
@@ -43,7 +47,7 @@ if (n1 < ns){
     h <- function (x1){
      A[pre, pre] %*% x1 + A[pre, npr] %*% g(x1)
     }
-  return <- list(g, h)
+  return(list(g = g, h = h))
   }
  }
 }
